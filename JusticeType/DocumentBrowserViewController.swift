@@ -32,15 +32,38 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     // MARK: UIDocumentBrowserViewControllerDelegate
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
-        let newDocumentURL: URL? = nil
+
+        let baseDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
+        let fileName = baseDirectory.appendingPathComponent("Untitled.txt")
         
-        // Set the URL for the new document here. Optionally, you can present a template chooser before calling the importHandler.
-        // Make sure the importHandler is always called, even if the user cancels the creation request.
-        if newDocumentURL != nil {
-            importHandler(newDocumentURL, .move)
-        } else {
-            importHandler(nil, .none)
+        let document = Document(fileURL: fileName)
+        
+        document.save(to: fileName, for: .forCreating) { success in
+            document.close { success in
+                importHandler(fileName, .move)
+            }
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        let newDocumentURL: URL? = nil
+//
+//        // Set the URL for the new document here. Optionally, you can present a template chooser before calling the importHandler.
+//        // Make sure the importHandler is always called, even if the user cancels the creation request.
+//        if newDocumentURL != nil {
+//            importHandler(newDocumentURL, .move)
+//        } else {
+//            importHandler(nil, .none)
+//        }
     }
     
     func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL]) {

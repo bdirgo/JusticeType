@@ -7,6 +7,22 @@
 //
 
 import SwiftUI
+import UIKit
+
+struct TextView: UIViewRepresentable {
+    
+    func makeUIView(context: Context) -> UITextView {
+        let view = UITextView()
+        view.isScrollEnabled = true
+        view.isEditable = true
+        view.isUserInteractionEnabled = true
+        view.contentInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        return view
+    }
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        
+    }
+}
 
 struct DocumentView: View {
     var document: UIDocument
@@ -20,7 +36,7 @@ struct DocumentView: View {
 
                 Text(document.fileURL.lastPathComponent)
             }
-
+            TextView()
             Button("Done", action: dismiss)
         }
     }
